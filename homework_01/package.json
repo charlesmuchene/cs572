@@ -2,7 +2,7 @@
 	"name": "homework_01",
 	"version": "1.0.0",
 	"description": "",
-	"main": "hw_04.js",
+	"main": "exercise_01.js",
 	"dependencies": {
 		"rxjs": "^6.4.0"
 	},
