@@ -3,9 +3,13 @@ String.prototype.filterWords = function(badWords) {
 	return this.split(delimiter).map((word) => word.replace(new RegExp(badWords.join('|')), '***')).join(delimiter);
 };
 
-new Promise(function(resolve, reject) {
-	const result = 'This house is nice!'.filterWords([ 'house', 'nice' ]);
-	resolve(result);
-}).then(function(data) {
-	console.log(data);
-});
+function filterStringWords(statement, badWords) {
+	return new Promise(function(resolve, reject) {
+		const result = statement.filterWords(badWords);
+		resolve(result);
+	}).then(function(data) {
+		console.log(data);
+	});
+}
+
+filterStringWords('This house is nice!', [ 'house', 'nice' ]);
