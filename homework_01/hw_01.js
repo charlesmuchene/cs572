@@ -3,4 +3,5 @@ String.prototype.filterWords = function(badWords) {
 	return this.split(delimiter).map((word) => word.replace(new RegExp(badWords.join('|')), '***')).join(delimiter);
 };
 
-console.log('This house is nice!'.filterWords([ 'house', 'nice' ]));
+const result = 'This house is nice!'.filterWords([ 'house', 'nice' ]);
+console.log(result);
