@@ -47,11 +47,8 @@ function filterStringWordsD(statement, badWords) {
 	return Observable.create(function(observer) {
 		const result = statement.filterWords(badWords);
 		observer.next(result);
-		observer.complete();
 	});
 }
 
 const observable = filterStringWordsD('This house is nice!', [ 'house', 'nice' ]);
-observable.subscribe((data) => {
-	console.log(data);
-});
+observable.subscribe((data) => console.log(data));
