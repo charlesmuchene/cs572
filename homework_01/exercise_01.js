@@ -41,10 +41,10 @@ filterStringWordsC('This house is nice!', [ 'house', 'nice' ]);
 // *************************************************************** //
 
 // Exercise 01 part D
-const { Observable } = require('rxjs');
+const { Observable } = rxjs;
 
 function filterStringWordsD(statement, badWords) {
-	return new Observable(function(observer) {
+	return Observable.create(function(observer) {
 		const result = statement.filterWords(badWords);
 		observer.next(result);
 		observer.complete();
