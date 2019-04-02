@@ -1,3 +1,0 @@
-# MWA course work
-
-Charlo 😎
