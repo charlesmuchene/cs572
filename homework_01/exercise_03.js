@@ -9,8 +9,10 @@ function applyCoupon(item) {
 	return (discount) => {
 		const price = item.price;
 		const discountPercentage = discount / 100;
-		return price - price * discountPercentage;
+		return {
+			price: price - price * discountPercentage
+		};
 	};
 }
 
-console.log(applyCoupon(avocado)(10));
+assert(applyCoupon(avocado)(10).price === 180);
