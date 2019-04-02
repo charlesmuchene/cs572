@@ -1,0 +1,20 @@
+1. Using setImmediate() instead of setTimeout(fn, timeout)
+
+setImmediate will be executed immediately (after poll phase) while setTimeout will be executed after a minimum threshold has elapsed if both are invoked within an I/O cycle.
+
+2. Difference between process.nextTick() and setImmediate()
+
+process.nextTick interrupts the event loop and is executed immediately after the currently executed operation completes irregardless of the currently phase. setImmediate's callback has to wait for the event loop to enter the check phase to be executed.
+
+3. 10 core nodejs modules
+
+- tty: provides classes used by a text terminal
+- v8: provides access about V8
+- stream: handles streaming data
+- os: provides information about the operating system
+- http: makes nodejs act as an HTTP server
+- events: handles events
+- fs: handles access to the file system
+- buffer: handles binary data
+- crypto: handles OpenSSL cryptographic functions
+- path: handles file paths
