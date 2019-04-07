@@ -16,6 +16,7 @@ app.use((request, response, next) => {
 
 // Errors
 app.use((error, request, response, next) => {
+    console.log(error);
     response.status(error.status || 500);
     response.send(`${error.status}: ${error.message}`)
 })
