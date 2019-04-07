@@ -6,10 +6,10 @@ const app = express();
 const port = 1234;
 const dataUrl = 'https://randomuser.me/api/?results=10';
 
-app.set('trust proxy', true);
+app.enable('trust proxy');
 app.enable('strict routing');
 app.enable('case sensitive routing');
-app.set('x-powered-by', false);
+app.disable('x-powered-by');
 
 app
 	.get('/users', (request, response) => {
