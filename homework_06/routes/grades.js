@@ -12,4 +12,11 @@ router.get('/:id', (request, response, next) => {
 	response.send(grade);
 });
 
+router.post('/', (request, response, next) => {
+	const grade = request.body;
+	grade.id = grade.id || Math.ceil(Math.random() * 10 + grades.length);
+	grades.push(grade);
+	response.redirect('/api/grades');
+});
+
 module.exports = router;

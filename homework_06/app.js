@@ -1,17 +1,23 @@
+// Dependencies
 const express = require('express');
 const createError = require('http-errors');
 const gradesRouter = require('./routes/grades');
 const indexRouter = require('./routes/index');
 
+// Setup
 const app = express();
 const port = 1234;
 
+// Middleware
+app.use(express.json());
+
+// Routes
 app.use('/', indexRouter);
 app.use('/api/grades', gradesRouter);
 
 // 404
 app.use((request, response, next) => {
-    next(createError(404));
+    next(createError(404, `Couldn't find url ${request.path}`));
 })
 
 // Errors
