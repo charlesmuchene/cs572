@@ -67,5 +67,8 @@ async function fetchData(url, request, response) {
 
 function sendData(results, request, response) {
   setPaginationLinks(request, response);
+  response.set({
+    'Cache-Control': 'private, max-age=86400',
+    'Last-Modified': new Date()});
   response.send(results.data.results);
 }
