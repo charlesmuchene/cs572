@@ -119,4 +119,4 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-sandbox/
+*.http

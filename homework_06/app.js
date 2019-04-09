@@ -10,13 +10,23 @@ const indexRouter = require('./routes/index');
 
 // Setup
 const app = express();
-const port = 1234;
+
+// Configuration
 const appLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+const port = 1234;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
 app.use(morgan('combined', { stream: appLogStream }));
+app.use(express.json());
+// app.use((request, response, next) => {
+// 	try {
+// 		JSON.parse(request.body);
+// 		return next();
+// 	} catch (e) {
+// 		return next({ status: 422, message: 'Invalid json body' });
+// 	}
+// });
 
 // Routes
 app.use('/', indexRouter);
@@ -34,4 +44,5 @@ app.use((error, request, response, next) => {
 	response.send(`${error.status}: ${error.message}`);
 });
 
+// Bootup
 app.listen(port, () => console.log('Started playground!'));
