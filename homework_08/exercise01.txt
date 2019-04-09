@@ -1,1 +1,53 @@
-This is the answer
+All queries are done on 'db.collection("restaurants")'
+
+1. Display all documents
+.find({})
+
+2. Display certain fields of restaurants with _id
+.find({}, {projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+3. Display certain fields of restaurants without _id
+.find({}, {projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1, _id: 0}})
+
+4. Display certain fields of restaurants with zipcode
+.find({}, {projection: {restaurant_id: 1, name: 1, district: 1, "address.zipcode": 1, _id: 0}})
+
+5. Display restaurants in the district of Bronx
+.find({district: 'Bronx'})
+
+6. Display restaurants in the district of Bronx limitting 5 restaurants
+.find({district: 'Bronx'}).limit(5)
+
+7. Display restaurants in the district of Bronx skipping 5 with a limit of 5
+.find({district: 'Bronx'}).limit(5).skip(5)
+
+8. Restaurants in coordinate value less than -95.754168
+.find({"address.coord": {$elemMatch: {$lt: -95.754168}}})
+
+9. Non-American cuisine restaurants
+.find({ $and: [{ cuisine: { $ne: "American " } }, { grades: { $elemMatch: { score: { $gt: 70 } } } }, {"address.coord": {$elemMatch: {$lt: -65.754168}}}] })
+
+10. Name starts with 'Wil'
+.find({ name: {$regex: '^Wil'}}, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+11. Name ends with 'ces'
+.find({ name: {$regex: 'ces$'}}, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+12. Name with 'Reg' somewhere
+.find({ name: {$regex: 'Reg'}}, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+13. Bronx district preparing Chinese or American
+.find({ district: 'Bronx', cuisine: { $in: [ 'Chinese', 'American ' ] } }, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+14. District is: Staten Island, Queens, Bronx, Brooklyn
+.find({district: { $in: [ 'Bronx', 'Queens', 'Brooklyn', 'Staten Island' ] } }, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+15. District is: Staten Island, Queens, Bronx, Brooklyn
+.find({district: { $in: [ 'Bronx', 'Queens', 'Brooklyn', 'Staten Island' ] } }, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+16. Less than 10 score
+.find({grades: {$elemMatch: {score: {$lt: 10}}}}, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
+
+17. Geographical location with 42˚ < lat <= 52˚
+//restaurant_id, name, address, geo loc lat - 42 < l <= 52
+.find({"address.coord.1": {$elemMatch: { $gt: 42, $lte: 52}}}, {projection: {restaurant_id : 1, name: 1, address: 1}})
