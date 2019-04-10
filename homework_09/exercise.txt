@@ -1,0 +1,24 @@
+### Exercise:
+
+1. All zipcodes in Washington State
+   
+   .aggregate([{ $match: { $state: 'WA' } } ])
+
+2. All zipcodes with population < 5000
+   
+   .aggregate([{ $match: { pop: { $lt: 5000 } } } ])
+
+3. Cities with more than one zipcode
+   
+   .aggregate([ { $group: { _id: { city: '$city', state: '$state' }, zipCount: { $sum: 1 } } },
+		{ $match: { zipCount: { $gt: 1 } } },
+		{ $project: { _id: 0, state: '$_id.state', city: '$_id.city' } },
+		{ $sort: { state: 1, city: 1 } }
+   ])
+
+4. Least populated city in each state
+    
+    .aggregate([{ $group: { _id: { state: '$state', city: '$city' }, population: { $sum: '$pop' } } },
+		{ $sort: { population: 1 } },
+		{ $group: { _id: '$_id.state', population: { $first: '$population' } } },
+		{ $sort: { _id: 1 } }])

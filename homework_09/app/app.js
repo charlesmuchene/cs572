@@ -15,7 +15,7 @@ function doQueries() {
 	const db = client.db(dbName);
 	const collection = db.collection(collectionName);
 
-	const pipeline = [ { $match: { state: 'WA' } } ];
+	const pipeline = [];
 
 	const callback = (err, cursor) => {
 		if (err) throw new Error(err.message);
