@@ -14,7 +14,7 @@ function runQueries() {
 	const db = client.db(dbName);
 	const collection = db.collection(collectionName);
 
-	const filter = { 'address.coord.1': { $elemMatch: { $eq: 40.6550235 } } };
+	const filter = {};
 
 	const projection = {};
 

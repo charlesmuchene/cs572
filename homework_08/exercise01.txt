@@ -49,5 +49,22 @@ All queries are done on 'db.collection("restaurants")'
 .find({grades: {$elemMatch: {score: {$lt: 10}}}}, { projection: {restaurant_id: 1, name: 1, district: 1, cuisine: 1}})
 
 17. Geographical location with 42˚ < lat <= 52˚
-//restaurant_id, name, address, geo loc lat - 42 < l <= 52
-.find({"address.coord.1": {$elemMatch: { $gt: 42, $lte: 52}}}, {projection: {restaurant_id : 1, name: 1, address: 1}})
+.find({"address.coord.1": { $gt: 42, $lte: 52}}, {projection: {restaurant_id : 1, name: 1, address: 1}})
+
+18. Sort names asc along with all columns
+.find({}).sort({name: 1, cuisine: 1, restaurant_id: 1, address: 1, district: 1})
+
+19. Sort names desc along with all columns
+.find({}).sort({name: -1, cuisine: -1, restaurant_id: -1, address: -1, district: -1})
+
+20. Cuisine asc, District desc
+.find({}).sort({cuisine: 1, district: -1})
+
+21. Determine if all addresses contain street
+.find({"address.street": {$exists: false}})
+
+22. Coord field is double
+.find({"address.coord": {type: "double" }})
+
+23. Custom query
+.find({name: {$regex: '^Mad'}}, { projection: { name: 1, district: 1, "address.coord": 1, cuisine: 1, _id: 0}})
