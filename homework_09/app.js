@@ -11,15 +11,15 @@ function doQueries() {
 	const db = client.db('zips');
 	const collection = db.collection('zips');
 
-    const pipeline = [];
-    
+	const pipeline = [];
+
 	const callback = (err, cursor) => {
 		if (err) throw new Error(err.message);
 		cursor.toArray((error, data) => {
 			if (error) throw new Error(error.message);
 			console.dir(data);
+			client.close();
 		});
 	};
 	collection.aggregate(pipeline, callback);
-	client.close();
 }
