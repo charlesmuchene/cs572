@@ -1,6 +1,10 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const client = new MongoClient('mongodb://localhost:27017');
+const dbUri = 'mongodb://localhost:27017';
+const dbName = 'zips';
+const collectionName = 'zips';
+
+const client = new MongoClient(dbUri, { useNewUrlParser: true });
 
 client.connect((error) => {
 	if (error) throw new Error(error.message);
@@ -8,10 +12,10 @@ client.connect((error) => {
 });
 
 function doQueries() {
-	const db = client.db('zips');
-	const collection = db.collection('zips');
+	const db = client.db(dbName);
+	const collection = db.collection(collectionName);
 
-	const pipeline = [];
+	const pipeline = [ { $match: { state: 'WA' } } ];
 
 	const callback = (err, cursor) => {
 		if (err) throw new Error(err.message);
