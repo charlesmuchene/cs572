@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 @Component({
 	selector: 'app-root',
 	template: `
-    <app-counter [counter]="10" (counterChange)="refreshCounter($event)"></app-counter>
+    <app-counter [counter]="componentCounterValue" (counterChange)="refreshCounter($event)"></app-counter>
   `,
 	styles: []
 })
 export class AppComponent {
+	componentCounterValue: number = 5;
 	refreshCounter(counter: number) {
-		console.log(counter);
+		this.componentCounterValue = counter;
 	}
 }
