@@ -3,10 +3,12 @@ import { Component } from '@angular/core';
 @Component({
 	selector: 'app-root',
 	template: `
-    <app-counter></app-counter>
+    <app-counter [counter]="10" (counterChange)="refreshCounter($event)"></app-counter>
   `,
 	styles: []
 })
 export class AppComponent {
-	title = 'play';
+	refreshCounter(counter: number) {
+		console.log(counter);
+	}
 }
