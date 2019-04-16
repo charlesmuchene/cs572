@@ -12,7 +12,9 @@ import { Component, OnInit } from '@angular/core';
         <app-dumb *ngFor="let person of people" [person]="person"></app-dumb>
       </ol>
     </div>
-    <div [isVisible]="!displayPeople">There are no people to display!</div>
+		<div [isVisible]="!displayPeople">There are no people to display!</div>
+		<hr>
+		<p makeBigger>Double click me, I will become bigger!</p>
   `,
 	styles: []
 })
