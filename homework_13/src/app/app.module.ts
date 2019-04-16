@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SmartComponent } from './smart.component';
 import { DumbComponent } from './dumb.component';
+import { IsVisibleDirective } from './is-visible.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     SmartComponent,
-    DumbComponent
+    DumbComponent,
+    IsVisibleDirective
   ],
   imports: [
     BrowserModule
