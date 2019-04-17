@@ -1,0 +1,5 @@
+<ul>
+    <li *ngFor="let user of users"><a [routerLink]="[user.login.uuid]">
+            {{user.name.first
+            | titlecase}} {{user.name.last | titlecase}}</a></li>
+</ul>

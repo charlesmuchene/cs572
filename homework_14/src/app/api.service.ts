@@ -4,7 +4,7 @@ import { HttpClient } from '@Angular/common/http';
 @Injectable({
 	providedIn: 'root'
 })
-export class ApiService {
+export class DataService {
 	private url = 'https://randomuser.me/api/?results=10';
 	private dataKey = 'datakey';
 

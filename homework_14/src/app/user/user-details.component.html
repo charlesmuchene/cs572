@@ -1,0 +1,16 @@
+<strong>Details</strong>
+<br/>
+    Name: {{user.name.title | titlecase}} {{user.name.first | titlecase}}
+    {{user.name.last |titlecase}}
+    <br />
+    Gender: {{user.gender}}
+    <br />
+    Dob: {{user.dob.date | date:'fullDate'}}
+    <br />
+    Age: {{user.dob.age}}
+    <br />
+    Email: {{user.email}}
+    <br />
+    Phone: {{user.phone}}
+    <br />
+    <img src="{{user.picture.medium}}" alt="User image" />
