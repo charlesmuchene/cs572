@@ -1,4 +1,4 @@
-import { DataService } from './api.service';
+import { DataService } from './services/data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@Angular/common/http';

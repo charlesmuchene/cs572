@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DataService } from '../api.service';
+import { UserService } from '../services/user.service';
 
 @Component({
 	selector: 'app-user-details',
@@ -10,20 +10,15 @@ import { DataService } from '../api.service';
 })
 export class UserDetailsComponent implements OnInit, OnDestroy {
 	private uuid: string;
-	private users = [];
+
 	private user;
 	private routeSubscription: Subscription;
 
-	constructor(private route: ActivatedRoute, private dataService: DataService) {
-		this.users = dataService.getCachedData();
+	constructor(private route: ActivatedRoute, private userService: UserService) {
 		this.routeSubscription = route.params.subscribe((parameters) => {
 			this.uuid = parameters['uuid'];
-			this.user = this.getUserData(this.uuid);
+			this.user = userService.getUserData(this.uuid);
 		});
-	}
-
-	private getUserData(uuid: string) {
-		return this.users.find((user) => user.login.uuid == uuid);
 	}
 
 	ngOnInit() {}
