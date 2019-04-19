@@ -28,6 +28,9 @@
             <mat-error *ngIf="signupForm.errors?.emailalreadyexists">
                 Email already exists
             </mat-error>
+            <mat-error *ngIf="signupForm.controls.email.errors?.email">
+                Invalid email
+            </mat-error>
             <mat-form-field class="full-width">
                 <input matInput placeholder="Password" type="password"
                     formControlName="password">

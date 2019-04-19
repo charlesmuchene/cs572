@@ -1,9 +1,10 @@
+import { UserService } from './../services/user.service';
 import { FormError } from './../models/form-error.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { EmailService } from './email.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-signup',
@@ -15,7 +16,13 @@ export class SignupComponent implements OnInit {
 	private emailalreadyexists = 'emailalreadyexists';
 	private unmatchedPasswords = 'unmatchedpasswords';
 
-	constructor(formBuilder: FormBuilder, private emailService: EmailService) {
+	constructor(formBuilder: FormBuilder, private userService: UserService) {
+		userService.saveUser({
+			firstname: 'Charlo',
+			lastname: 'Muchene',
+			email: 'charlo@internet.mwa',
+			password: 'password'
+		});
 		this.createForm(formBuilder);
 	}
 
@@ -26,7 +33,11 @@ export class SignupComponent implements OnInit {
 			{
 				firstname: [ 'Charlo', [ Validators.required ] ],
 				lastname: [ 'Muchene', [ Validators.required ] ],
-				email: [ 'charlo@internet.mwa', Validators.required, this.asyncEmailValidator.bind(this) ],
+				email: [
+					'charlo@internet.mwa',
+					[ Validators.required, Validators.email ],
+					this.asyncEmailValidator.bind(this)
+				],
 				password: [ 'password', [ Validators.required, Validators.min(3) ] ],
 				confirmpassword: [ 'password', [ Validators.required ] ],
 				terms: [ 'true', [ Validators.required ] ]
@@ -36,13 +47,16 @@ export class SignupComponent implements OnInit {
 	}
 
 	onSubmit() {
-		console.log('We are one');
+		console.log('We are one', this.signupForm);
 	}
 
 	private asyncEmailValidator(email: FormControl): Observable<FormError | null> {
-		return this.emailService
+		return this.userService
 			.emailExists(email.value)
-			.pipe(map((exists) => (exists ? new FormError(this.emailalreadyexists) : null)));
+			.pipe(
+				map((exists) => (exists ? new FormError(this.emailalreadyexists) : null)),
+				tap((value) => console.log(value))
+			);
 	}
 
 	private passwordMatchValidator(form: FormGroup): ValidationErrors | null {

@@ -1,7 +1,8 @@
 import { User } from './../models/user.model';
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { throttleTime, map } from 'rxjs/operators';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
 	providedIn: 'root'
@@ -9,6 +10,22 @@ import { throttleTime } from 'rxjs/operators';
 export class AppRepository {
 	private userskey = 'users'; // TODO use enum??
 	constructor() {}
+
+	saveUser(user: User): Observable<boolean> {
+		return this.getUsers().pipe(
+			map((users) => {
+				let data: User[];
+				if (!!users) {
+					users.push(user);
+					data = users;
+				} else {
+					data = [ user ];
+				}
+				localStorage.setItem(this.userskey, this.fromJson<User[]>(data));
+				return true;
+			})
+		);
+	}
 
 	getUsers(): Observable<User[] | null> {
 		return this.getData<User>(this.userskey);
@@ -22,5 +39,9 @@ export class AppRepository {
 
 	private toJson(value: string) {
 		return JSON.parse(value);
+	}
+
+	private fromJson<T>(value: T) {
+		return JSON.stringify(value);
 	}
 }
