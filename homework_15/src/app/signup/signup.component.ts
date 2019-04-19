@@ -1,6 +1,9 @@
+import { FormError } from './../models/form-error.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { EmailService } from './email.service';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-signup',
@@ -12,7 +15,7 @@ export class SignupComponent implements OnInit {
 	private emailalreadyexists = 'emailalreadyexists';
 	private unmatchedPasswords = 'unmatchedpasswords';
 
-	constructor(formBuilder: FormBuilder) {
+	constructor(formBuilder: FormBuilder, private emailService: EmailService) {
 		this.createForm(formBuilder);
 	}
 
@@ -23,7 +26,7 @@ export class SignupComponent implements OnInit {
 			{
 				firstname: [ 'Charlo', [ Validators.required ] ],
 				lastname: [ 'Muchene', [ Validators.required ] ],
-				email: [ 'charlo@internet.mwa', Validators.required, this.asyncEmailValidator ],
+				email: [ 'charlo@internet.mwa', Validators.required, this.asyncEmailValidator.bind(this) ],
 				password: [ 'password', [ Validators.required, Validators.min(3) ] ],
 				confirmpassword: [ 'password', [ Validators.required ] ],
 				terms: [ 'true', [ Validators.required ] ]
@@ -36,13 +39,10 @@ export class SignupComponent implements OnInit {
 		console.log('We are one');
 	}
 
-	private asyncEmailValidator(
-		email: FormControl
-	): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-		// TODO Make unique email call to service
-		return new Promise<ValidationErrors>((resolve, reject) => {
-			setTimeout(() => resolve(null), 2000);
-		});
+	private asyncEmailValidator(email: FormControl): Observable<FormError | null> {
+		return this.emailService
+			.emailExists(email.value)
+			.pipe(map((exists) => (exists ? new FormError(this.emailalreadyexists) : null)));
 	}
 
 	private passwordMatchValidator(form: FormGroup): ValidationErrors | null {
